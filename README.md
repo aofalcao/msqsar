@@ -125,6 +125,12 @@ Control parameters:
     -algo (SVM | RF)- machine learning algorithm  (default: RF)
     -ntrees - Number of trees in random forest (RF (default: 20)
     -nprocs - Number of processes if -parallel option enabled
+    
+Output Control Options:
+    -silent - no intermediate output at all
+    -detail - in the final output show the individual predictions
+    -nostats - do not show end model statistics for methods eval and test
+    -parallel - run the process in parallel (currently only for screening)
 ```
 
 
@@ -237,15 +243,15 @@ PVE:  0.7861
 %Predicted:  0.862
 Detailed results:
    CHEMBL270177	 0.2397	NA
-  CHEMBL1794855	 0.0000	NA
-    CHEMBL90063	 0.0000	 0.0000
+   CHEMBL1794855	 0.0000	NA
+   CHEMBL90063	 0.0000	0.0000
    CHEMBL250403	 0.1747	NA
    CHEMBL343324	 0.2750	NA
-   CHEMBL609579	 0.1399	 0.2964
+   CHEMBL609579	 0.1399	0.2964
    ...
 ```
 
-In the section *Detailed results:* the actual data from the .sar file is presented along the predicted values in the following column. We can see that, for the first two molecules, the model was not able to make any type of prediction and therefore assigned them an `NA` 
+In the section *Detailed results:* (not completely displayed above) the actual data from the .sar file is presented along the predicted values in the following column. We can see that, for the first two molecules, the model was not able to make any type of prediction and therefore assigned them an `NA` 
 
 ## Screening a database
 
@@ -253,5 +259,10 @@ This is one of the most powerful features of `msqsar` and it allows screening a 
 
 The screening process, depending on the size of the screening database can be a very intensive computational process and as such it has been optimized to take advantage of parallel processing. This allows screening of a dataset with ~13 million compounds in 4-5 hours, using only a common desktop computer
 
+Screening a database requires that the database is in SMI format [SMILES format](https://open-babel.readthedocs.io/en/latest/FileFormats/SMILES_format.html) with the SMILES of molecule and the molecule ID in each line. E.g.
 
-[chWS]: <https://www.ncbi.nlm.nih.gov/pubmed/28602100>
+```
+COc1noc2c1CCNCC2 CHEMBL2331792
+Cn1oc2c(c1=O)CCNCC2 CHEMBL2331804	
+NC1=Nc2ccc(Cl)cc2CN1 CHEMBL2436555
+```
