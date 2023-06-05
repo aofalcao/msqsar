@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: MS-QSAR
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Andre
+    name-particle: O
+    family-names: Falcao
+    email: aofalcao@fc.ul.pt
+    orcid: 'https://orcid.org/0000-0002-3588-8746'
+    affiliation: DI/FCUL - Universidade de Lisboa
+repository-code: 'https://github.com/aofalcao/msqsar'
+abstract: >-
+  MS-QSAR is a complete all-in-one tool for fitting QSAR
+  models, checking the modelability of datasets, enforce an
+  applicability domain, and screening very large databases
+  of chemical molecules. It uses localized metric space
+  representations for creating very fast models, typically
+  with high classification and regression statistics
+keywords:
+  - QSAR
+  - Quantitative Structure-Activity Relationship
+  - Machine Learning
+  - Chemical Database Screening
+  - Metric Space Modelling
+license: MIT
