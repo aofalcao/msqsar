@@ -123,12 +123,12 @@ PVE:  0.7960
 %Predicted:  0.887
 ```
 
-Note that the program detected this as a regression problem and roduced the appropriate regresion statistics. Now what fdo they mean?
+Note that the program detected this as a regression problem and produced the appropriate regression statistics. Now what 1do they mean?
 * RMSE - root mean squared error. is a measure of the differences between predicted and real value. For this type of data (pIC50, scaled between 0 and 1) values below 0.2 mean that the model is making reliable predictions, and values below 0.1 suggest extremely precise models.
 * Pearson - this is the correlation between the predicted and the estimated values. It allows to evaluate the robustness of the model
 * PVE - Percentage of Varaince explained. This is similar to the R2. It measures how much of the variance of the activity variable is being captured by the model
 
-The last value $%predicted$ has a different meaning. As this approach is strongly anchored on strutuctural similarrity, if a molecule is deemed too distant from its closest neighbours then it cannot be predicted. This score thus means how many of the molecules of the dataset have been assignmed a value. In this case, about 11% of all molecules were not predicted. The maximum distance of the molecules used for prediction can be user defined thus allowing for the control of the size of the prediction space (modelable space)
+The last value $%predicted$ has a different meaning. As this approach is strongly anchored on strutuctural similarrity, if a molecule is deemed too distant from its closest neighbours then it cannot be predicted. This score thus means how many of the molecules of the dataset have been assignmed a value. In this case, about 11.3% of all molecules were not predicted (`0.113 = 1 - 0.887`). The maximum distance of the molecules used for prediction can be user defined thus allowing for the control of the size of the prediction space (modelable space)
 
 ### Modelability for Classification datasets
 
