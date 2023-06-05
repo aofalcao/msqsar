@@ -1,6 +1,7 @@
 # MSQSAR 
 
-`MSQSAR`  uses chemical similarity for inference and analysis of the chemical space. It allows for the folowing QSAR operations
+
+[QSAR](https://en.wikipedia.org/wiki/Quantitative_structure%E2%80%93activity_relationship) stands for Quantitative Structure Activity Relationship and is typically used in contects of inslico modeling approaches for pharmacological activity modeling.  `MSQSAR`  uses chemical similarity for inference and analysis of the chemical space. It allows for the folowing QSAR operations
 
 * Create QSAR models (quatitative or qualitative models)
 * Evaluate data set modelability
