@@ -266,3 +266,80 @@ COc1noc2c1CCNCC2 CHEMBL2331792
 Cn1oc2c(c1=O)CCNCC2 CHEMBL2331804	
 NC1=Nc2ccc(Cl)cc2CN1 CHEMBL2436555
 ```
+
+The scrrening process is a 5 phase procedure
+1. Checks that the model is a classification model: That is we want for thsi proces only identify whether or not each molecule in a data set is active or not. We are not ( at this phase) trying to assess whether how much the molecule is actually active
+2. Determinte the structures of an input file that will be the testbed for data screening. It's agains this data set that the data in the screening database will be tested
+3. Compute the Chemical space of the input data set
+4. Preescreen. At this phase all the molecules will be verified if they have any likelihood  of being active. This is the lengthiest phase and largelly may benefit  from parallel processing
+5. Screening. With the candidates determined, we can actually screen them assessing the likelihood of them being active for the existing QAR problem. This will output a SAR file with the final results for the process.
+
+All the above procedures are accomplished in one only call. Here we will screen the mini_zinc database with about 64k molecules to see home many may be suitable for an EGFR inhibition dataset
+
+```
+$ python msqsar.py screen -scr data/mini_zinc.smi -in data/EGFR_class.sar
+```
+Ant this is the output
+
+```
+Screening!
+1. Model Type: Classification
+2. Determining structure 6255
+3. Computing chemical space
+4. Starting pre-screen
+        (1) Mols read:     10000 - Candidates found:     1 ( 0.0001)
+        (1) Mols read:     20000 - Candidates found:     2 ( 0.0001)
+        (1) Mols read:     30000 - Candidates found:     3 ( 0.0001)
+        (1) Mols read:     40000 - Candidates found:     4 ( 0.0001)
+        (1) Mols read:     50000 - Candidates found:     5 ( 0.0001)
+        (1) Mols read:     60000 - Candidates found:     9 ( 0.0001)
+5. Pre-screen finished. Candidates found: 9
+6. Start the candidate screening...
+16691784        A       CCOc1ccc(Nc2nncc3ccccc23)cc1
+11906948        N       COc1cc2ncnc(Nc3ccccc3N3CCOCC3)c2cc1OC
+12748174        NA      C[C@H](Nc1ncnc2scc(-c3ccccc3)c12)c1ccc(S(C)(=O)=O)cc1
+89423861        NA      COc1cc(F)cc(NC(=O)Nc2ccccn2)c1
+44208           N       C[C@H](Oc1cc(O)c2c(=O)cc(-c3ccccc3)oc2c1)C(=O)O
+31948967        NA      COc1cc(CNc2ncnc3ccccc23)cc(OC)c1OC
+8764851         N       COC[C@@H](O)CNC(=O)COc1cc(O)c2c(=O)cc(-c3ccccc3)oc2c1
+170623036       A       Cc1ccc2ncnc(N[C@H](C)c3ccccc3)c2c1
+38245886        A       OCCOCCn1ccc2ncnc(Nc3ccc(Oc4cccc(C(F)(F)F)c4)c(Cl)c3)c21
+```
+
+The final molecules might be saved on a .SAR file using the `-out` option
+
+The same procedure could be processed in parallel using the `-parallel` option in the `-nprocs` control parameter. This will create some data partitions of the database, but the procedure will be much faster
+
+```
+$ python msqsar.py screen -scr data/mini_zinc.smi -in data/EGFR_class.sar -parallel  -nprocs 6
+```
+
+Producing the following output
+```
+Screening!
+1. Model Type: Classification
+2. Determining structure 6255
+3. Computing chemical space
+4. Starting pre-screen
+        This time it is parallel!
+        (3) Mols read:     10000 - Candidates found:     2 ( 0.0002)
+        (1) Mols read:     10000 - Candidates found:     0 ( 0.0000)
+        (2) Mols read:     10000 - Candidates found:     4 ( 0.0004)
+        (6) Mols read:     10000 - Candidates found:     0 ( 0.0000)
+        (4) Mols read:     10000 - Candidates found:     1 ( 0.0001)
+        (5) Mols read:     10000 - Candidates found:     2 ( 0.0002)
+5. Pre-screen finished. Candidates found: 9
+6. Start the candidate screening...
+16691784        A       CCOc1ccc(Nc2nncc3ccccc23)cc1
+11906948        N       COc1cc2ncnc(Nc3ccccc3N3CCOCC3)c2cc1OC
+31948967        NA      COc1cc(CNc2ncnc3ccccc23)cc(OC)c1OC
+170623036       A       Cc1ccc2ncnc(N[C@H](C)c3ccccc3)c2c1
+12748174        NA      C[C@H](Nc1ncnc2scc(-c3ccccc3)c12)c1ccc(S(C)(=O)=O)cc1
+8764851         N       COC[C@@H](O)CNC(=O)COc1cc(O)c2c(=O)cc(-c3ccccc3)oc2c1
+89423861        NA      COc1cc(F)cc(NC(=O)Nc2ccccn2)c1
+44208           N       C[C@H](Oc1cc(O)c2c(=O)cc(-c3ccccc3)oc2c1)C(=O)O
+38245886        A       OCCOCCn1ccc2ncnc(Nc3ccc(Oc4cccc(C(F)(F)F)c4)c(Cl)c3)c21
+```
+
+
+
