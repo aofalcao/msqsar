@@ -161,20 +161,10 @@ def get_neighbours(mol_ids_test, mol_ids_train, dist_matrix, max_dst, max_siz, m
     for each molecule in mol_ids_test select the closest neighbours in mol_ids_train
     the outcasts are molecules for which we do not find enough close elements and are difficult to predict
     """
-    nmols, ncols = dist_matrix.shape
+    nmols = np.shape(dist_matrix)[0]
+    ncols = np.shape(dist_matrix)[1]
     mol_neighs = {}
     outcasts=[]
-    
-    
-i = 1 # Row index
-M = 2 # Number of columns to select
-closest_cols = np.argsort(dist_matrix[i])[:M] # Indices of closest columns
-result = dist_matrix[:, closest_cols] # Select columns for all rows
-
-print(result)
-    
-    
-    
     
     for i in range(nmols):
         mol_id=mol_ids_test[i]
@@ -200,6 +190,7 @@ print(result)
             mol_neighs[mol_id]=[]
     
     return mol_neighs, outcasts
+
 
 def make_X_train(neighs, dist_matrix):
     rc = np.array(neighs, dtype=np.intp)
