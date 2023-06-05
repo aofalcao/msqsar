@@ -1,4 +1,4 @@
-# MSQSAR 
+# MS-QSAR 
 
 
 [QSAR](https://en.wikipedia.org/wiki/Quantitative_structure%E2%80%93activity_relationship) stands for Quantitative Structure Activity Relationship and is typically used in contects of inslico modeling approaches for pharmacological activity modeling.  `MSQSAR`  uses chemical similarity for inference and analysis of the chemical space. It allows for the folowing QSAR operations
@@ -11,9 +11,9 @@
 Despite being implemented in 100% pure Python it was developed taking advantage of very efficient libraries for numerical processing, machine learning and data processing.
 
 
-## CS tools requirements
+## MS-QSAR requirements
 
-CS tools is essentially Python software that relies on a number of external libraries. Namely:
+`MSQSAR` is essentially Python software that relies on a number of external libraries. Namely:
 
 * numpy
 * scikit-learn
