@@ -50,9 +50,9 @@ Just make sure these are installed within the `rdkit` environment.
 This should be a trivial process. Just copy the `msqsar.py` files to a new folder in your woring directory: 
 
 ```
-$ mkdir cstools
-$ cp [source code path]/*.py cstools/.
-$ cd cstools
+$ mkdir qsartools
+$ cp [source code path]/*.py qsartools/.
+$ cd qsartools
 ```
 
 ### SAR files
@@ -92,6 +92,40 @@ Where 'A' stands for active, 'N', is a non-active molecule and 'NA' means undete
 
 ## Calling for --help
 
+Running `msqar` with the `--help` option will display the usage options of the tool
+
+```
+$ python msqsar.py --help
+```
+
+will give:
+
+```
+MS-QSAR - (C) Andre Falcao DI/FCUL version 0.2.20230605
+Usage: This is a python tool for building Metric space QSAR models.
+       This tool requires an enviroment where RDkit and scikit-learn is installed
+       To run type python msqsar.py [method] -in [input .sar file] [options]
+
+method can be:
+    eval - evaluates the quality of a given data set for making inference
+    test - checks predictions made against a data set
+    infer - makes predictions against a data set - no stats are provided
+    screen - screens a large database, identifying the most likely candidates (classification only)
+
+Control parameters:
+    -in file_name - the data set used for model building (required) (.sar format)
+    -test file_name - data set required for method=test (.sar format)
+    -scr filename - file with data for screening. (.smi format)
+    -out filename - file where the output is stored. if ommited, redirects to stdout
+    -fpR N - fingerprint radius (default: 2)
+    -fpNB N - fingerprint number of bits (default: 1024)
+    -max_dist f - maximum distance for prediction (default: 0.9)
+    -min_sims N - minimum number of instances for modeling (default: 5)
+    -max_sims - maximum number of instances for modeling (default: 20)
+    -algo (SVM | RF)- machine learning algorithm  (default: RF)
+    -ntrees - Number of trees in random forest (RF (default: 20)
+    -nprocs - Number of processes if -parallel option enabled
+```
 
 
 ## Checking the modelability of a test file
