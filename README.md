@@ -145,7 +145,7 @@ Here is a simple run in a regression type problem to infer the activity of molec
 
 
 ```
-$ python msqsar.py eval -in ..\..\data\H1\H1.sar
+$ python msqsar.py eval -in data/H1.sar
 ```
 
 The corresponding output will show which operation is being processed and in the end will output the regression statistics
@@ -177,7 +177,7 @@ There are no special directives to fit a classification problem, other than the 
 In this example however we are using two option settings. The first one to control the maximum distance (`-max_dist`) we are allowing for modeling and a second one (`-silent`) to suppress the intermediate output and just produce the final statistics
 
 ```sh
-$ python msqsar.py eval -in ..\..\data\EGFR\EGFR_class.sar -max_dist 0.7 -silent
+$ python msqsar.py eval -in data/EGFR_class.sar -max_dist 0.7 -silent
 ```
 
 The above produced the results below
@@ -231,7 +231,7 @@ The statistics are the same as above, but now refer to the validation set. As it
 The actual prediction results can be obtained by using the `-detail` option and writing the output to a file with the `-out` option
 
 ```sh 
-$ python msqsar.py test -in ..\..\data\H1\H1_train.sar -test ..\..\data\H1\H1_test.sar -silent -detail -out H1.preds
+$ python msqsar.py test -in data/H1_train.sar -test data/H1_test.sar -silent -detail -out H1.preds
 ```
 
 The `H1.preds` file is a text file that will include the model statistics as well as the individual prediction results for each molecule. Its first lines are something like this
@@ -251,7 +251,7 @@ Detailed results:
    ...
 ```
 
-In the section *Detailed results:* (not completely displayed above) the actual data from the .sar file is presented along the predicted values in the following column. We can see that, for the first two molecules, the model was not able to make any type of prediction and therefore assigned them an `NA` 
+In the section *Detailed results:* (not completely displayed above) the actual data from the output .sar file is presented along the predicted values in the following column. We can see that, for the first two molecules, the model was not able to make any type of prediction and therefore assigned them an `NA` 
 
 ## Screening a database
 
@@ -267,14 +267,14 @@ Cn1oc2c(c1=O)CCNCC2 CHEMBL2331804
 NC1=Nc2ccc(Cl)cc2CN1 CHEMBL2436555
 ```
 
-The scrrening process is a 5 phase procedure
+The screening process is a 5 phase procedure
 1. Checks that the model is a classification model: That is we want for thsi proces only identify whether or not each molecule in a data set is active or not. We are not ( at this phase) trying to assess whether how much the molecule is actually active
 2. Determinte the structures of an input file that will be the testbed for data screening. It's agains this data set that the data in the screening database will be tested
 3. Compute the Chemical space of the input data set
 4. Preescreen. At this phase all the molecules will be verified if they have any likelihood  of being active. This is the lengthiest phase and largelly may benefit  from parallel processing
 5. Screening. With the candidates determined, we can actually screen them assessing the likelihood of them being active for the existing QAR problem. This will output a SAR file with the final results for the process.
 
-All the above procedures are accomplished in one only call. Here we will screen the mini_zinc database with about 64k molecules to see home many may be suitable for an EGFR inhibition dataset
+All the above procedures are accomplished in one only call. Here we will screen the `mini_zinc.smi` database with about 64k molecules to see home many may be suitable for an EGFR inhibition dataset. This sample database was created with randomly selected data from the [ZINC20 database](https://zinc20.docking.org/)
 
 ```
 $ python msqsar.py screen -scr data/mini_zinc.smi -in data/EGFR_class.sar
@@ -306,7 +306,7 @@ Screening!
 38245886        A       OCCOCCn1ccc2ncnc(Nc3ccc(Oc4cccc(C(F)(F)F)c4)c(Cl)c3)c21
 ```
 
-The final molecules might be saved on a .SAR file using the `-out` option
+The final molecules might be saved on a .SAR file using the `-out` control parameter
 
 The same procedure could be processed in parallel using the `-parallel` option in the `-nprocs` control parameter. This will create some data partitions of the database, but the procedure will be much faster
 
