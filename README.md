@@ -1,29 +1,22 @@
-#MSQSAR 
+# MSQSAR 
 
-`MSQSAR`  uses chemical similarity for inference ana analysis of the chemical space. Fo several applications, CS tools can make a heavy use of [ChEMBL web services][chWS], so, either a local copy of ChEMBL is available in the host machine, or a reliable connection to ChEMBL will be necessary
-
-CS Tools allows for the folowing QSAR operations
+`MSQSAR`  uses chemical similarity for inference and analysis of the chemical space. It allows for the folowing QSAR operations
 
 * Create QSAR models (quatitative or qualitative models)
 * Evaluate data set modelability
 * Validate models
 * Screen datasets
-* Inspect possible targets for a set of molecules
-* Perform quantitative evaluations of possible targets for sets of molecules
-* Perform detailed analysis of target likelyhoods for a single molecule
-* Visually inspect the dataset quality in a 2D probabilistic surface map of molecular activity 
 
 Despite being implemented in 100% pure Python it was developed taking advantage of very efficient libraries for numerical processing, machine learning and data processing.
 
 
-### CS tools requirements
+## CS tools requirements
 
 CS tools is essentially Python software that relies on a number of external libraries. Namely:
 
 * numpy
 * scikit-learn
 * rdkit
-* requests
 
 Of those, rdkit is the trickiest to install. Anaconda makes the rdkit installation a breeze and this is the process recommended, although it might be possible to use a [docker container](https://hub.docker.com/search?q=rdkit&type=image) with rdkit already installed. To install rdkit with anaconda we can follow the [procedure detailed in the official rdkit distribution](https://www.rdkit.org/docs/Install.html):
 
@@ -51,19 +44,15 @@ $ conda install requests
 
 Just make sure these are installed within the `rdkit` environment. 
 
+### Installing MSQSAR
 
-### Installing CS tools
-
-This should be a trivial process. Just copy the 3 python files to a new folder in your woring directory: 
-
+This should be a trivial process. Just copy the `msqsar.py` files to a new folder in your woring directory: 
 
 ```
 $ mkdir cstools
 $ cp [source code path]/*.py cstools/.
 $ cd cstools
 ```
-
-
 
 ### SAR files
 
@@ -98,16 +87,18 @@ CHEMBL161203	NA	CN(C)CCSc1nc(C(C)(C)C)cs1
 Where 'A' stands for active, 'N', is a non-active molecule and 'NA' means undeterminate. Occasionally, cs-tools will produce SAR files with predicted values from models and 'NA' means that it was not possible to ascertain a value
 
 
+# Using MSQSAR
 
-# Using CS-Tools
+## Calling for --help
+
+
 
 ## Checking the modelability of a test file
 
-For this we will use the MSQSAR utility. This utility is the main one for modeling. It uses metric space modeling to try to infer the local structure of a dataset, and accordingly perform an evaluation of the coherency of such a space. A highly coherent space will preserve similar activity profiles in close chemical-space regions. As such, for each molecule in the data set, its activity will be inferred according to its closest neighbours.   
+This is the main procedure utility is the main one for modeling. It uses metric space modeling to try to infer the local structure of a dataset, and accordingly perform an evaluation of the coherency of such a space. A highly coherent space will preserve similar activity profiles in close chemical-space regions. As such, for each molecule in the data set, its activity will be inferred according to its closest neighbours, but not by using a k-NN algorithm, rather by defining a non-linear chemical property layer over the chemical space of the molecules   
 
 
-
-### Regression data sets
+### Modelability for regression data sets
 
 Here is a simple run in a regression type problem to infer the activity of molecules to the Histamine 1 Receptor (H1R). This will require just that the user specify the file location of the .sar file that will be used for evaluation.
 
@@ -138,7 +129,7 @@ Note that the program detected this as a regression problem and roduced the appr
 
 The last value $%predicted$ has a different meaning. As this approach is strongly anchored on strutuctural similarrity, if a molecule is deemed too distant from its closest neighbours then it cannot be predicted. This score thus means how many of the molecules of the dataset have been assignmed a value. In this case, about 11% of all molecules were not predicted. The maximum distance of the molecules used for prediction can be user defined thus allowing for the control of the size of the prediction space (modelable space)
 
-### Classification datasets
+### Modelability for Classification datasets
 
 There are no special directives to fit a classification problem, other than the data should appear in the .SAR format with the activity of each molecule being one of A, N, or NA, for active, non-active and not assigned
 
@@ -223,7 +214,7 @@ In the section *Detailed results:* the actual data from the .sar file is present
 
 ## Screening a database
 
-This is one of the most powerful features of CS-tools and it allows screening a database with millions of compounds for activity for a given target. For the moment it allows only the identification of potentially active molecules, and not so much the attribution of a quantitative score to each one. This can be easily solved as we will see.
+This is one of the most powerful features of `msqsar` and it allows screening a database with millions of compounds for activity for a given target. For the moment it allows only the identification of potentially active molecules, and not so much the attribution of a quantitative score to each one. This can be easily solved as we will see.
 
 The screening process, depending on the size of the screening database can be a very intensive computational process and as such it has been optimized to take advantage of parallel processing. This allows screening of a dataset with ~13 million compounds in 4-5 hours, using only a common desktop computer
 
