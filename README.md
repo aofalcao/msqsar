@@ -342,4 +342,57 @@ Screening!
 ```
 
 
+## Using `msqsar` as a library
+
+The file `msqsar.py` can be used as a Python module provided it is accessible within the path or in the same folder of the application
+
+### Example 1: Validating a model
+
+For instance for validating a model against a testing set, with all default parameters but a max distance = 0.8, we could run
+```python
+import msqsar as msq
+res = msq.validate_model("data/H1_train.sar", "data/H1_test.sar", max_dst=0.8)
+stats=msq.get_stats(res)
+for st in stats: print(st, "-->", stats[st])
+```
+
+which will produce:
+
+```
+Model Type: Regression
+pve --> 0.7012722414696078
+rmse --> 0.17155424829084787
+pearson --> 0.8397271370003132
+N --> 246
+N0 --> 243
+predicted --> 0.9878048780487805
+```
+
+### Example 2: Screening a database
+
+For screening a database we call the `screener()` function. **IMPORTANT NOTE:** within Jupyter the parallel processing will probably not work
+
+```python
+import msqsar as msq
+res = msq.screener("data/bEGFR_class.sar", "data/mini_zinc.smi", max_dst=0.5)
+
+#sort of SAR file printing
+for mid in res['preds']:
+    print(mid, "\t", res['preds'][mid], "\t", res['smiles'][mid])
+```
+
+will give:
+
+```
+16691784 	 A 	 CCOc1ccc(Nc2nncc3ccccc23)cc1
+11906948 	 A 	 COc1cc2ncnc(Nc3ccccc3N3CCOCC3)c2cc1OC
+12748174 	 NA 	 C[C@H](Nc1ncnc2scc(-c3ccccc3)c12)c1ccc(S(C)(=O)=O)cc1
+89423861 	 NA 	 COc1cc(F)cc(NC(=O)Nc2ccccn2)c1
+44208 	        N 	 C[C@H](Oc1cc(O)c2c(=O)cc(-c3ccccc3)oc2c1)C(=O)O
+31948967 	 A 	 COc1cc(CNc2ncnc3ccccc23)cc(OC)c1OC
+8764851 	 N 	 COC[C@@H](O)CNC(=O)COc1cc(O)c2c(=O)cc(-c3ccccc3)oc2c1
+170623036 	 A 	 Cc1ccc2ncnc(N[C@H](C)c3ccccc3)c2c1
+38245886 	 A 	 OCCOCCn1ccc2ncnc(Nc3ccc(Oc4cccc(C(F)(F)F)c4)c(Cl)c3)c21```
+```
+
 
