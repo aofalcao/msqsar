@@ -24,7 +24,7 @@ Of those, rdkit is the trickiest to install. Anaconda makes the rdkit installati
 First we create an environment `rdkit-env` like this:
 
 ```sh
-$ conda create -c rdkit -n rdkit-env rdkit
+$ conda create -c conda-forge -n rdkit-env rdkit
 ```
 
 and then to activate we just activate the environment to start working
